@@ -7,9 +7,11 @@ namespace simplescript
     {
         static void Main(string[] args)
         {
-            var script = CSharpScript.Create("\"Hello world\"");
+            var script = CSharpScript.Create("\"Hello World\"");
             var result = script.RunAsync().ReturnValue;
             Console.WriteLine(result.Result);
+
+            // async version
 
             //result.ReturnValue
             //    .ContinueWith(t =>

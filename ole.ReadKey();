@@ -1,0 +1,81 @@
+[1mdiff --git a/simplerepl/App.config b/simplerepl/App.config[m
+[1mindex 88fa402..2d2a12d 100644[m
+[1m--- a/simplerepl/App.config[m
+[1m+++ b/simplerepl/App.config[m
+[36m@@ -1,6 +1,6 @@[m
+[31m-﻿<?xml version="1.0" encoding="utf-8" ?>[m
+[32m+[m[32m<?xml version="1.0" encoding="utf-8"?>[m
+ <configuration>[m
+     <startup> [m
+[31m-        <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5.2" />[m
+[32m+[m[32m        <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.6"/>[m
+     </startup>[m
+[31m-</configuration>[m
+\ No newline at end of file[m
+[32m+[m[32m</configuration>[m
+[1mdiff --git a/simplerepl/Program.cs b/simplerepl/Program.cs[m
+[1mindex 021161b..37ee2ad 100644[m
+[1m--- a/simplerepl/Program.cs[m
+[1m+++ b/simplerepl/Program.cs[m
+[36m@@ -1,9 +1,26 @@[m
+[31m-﻿namespace simplerepl[m
+[32m+[m[32m﻿using Microsoft.CodeAnalysis.Scripting;[m
+[32m+[m[32musing Microsoft.CodeAnalysis.Scripting.CSharp;[m
+[32m+[m[32musing System;[m
+[32m+[m
+[32m+[m[32mnamespace simplerepl[m
+ {[m
+     class Program[m
+     {[m
+         static void Main(string[] args)[m
+         {[m
+[32m+[m[32m            Script<object> script = CSharpScript.Create("");[m
+[32m+[m
+[32m+[m[32m            while (true)[m
+[32m+[m[32m            {[m
+[32m+[m[32m                Console.Write("> ");[m
+[32m+[m[32m                var code = Console.ReadLine();[m
+[32m+[m
+[32m+[m[32m                script = script.WithPrevious(script)[m
+[32m+[m[32m                    .WithCode(code);[m
+[32m+[m[32m                var result = script.RunAsync().ReturnValue;[m
+[32m+[m
+[32m+[m[32m                Console.WriteLine(result.Result);[m
+[32m+[m[32m            }[m
+         }[m
+     }[m
+ }[m
+[1mdiff --git a/simplerepl/simplerepl.csproj b/simplerepl/simplerepl.csproj[m
+[1mindex 54a7b66..24e2f9d 100644[m
+[1m--- a/simplerepl/simplerepl.csproj[m
+[1m+++ b/simplerepl/simplerepl.csproj[m
+[36m@@ -9,9 +9,10 @@[m
+     <AppDesignerFolder>Properties</AppDesignerFolder>[m
+     <RootNamespace>simplerepl</RootNamespace>[m
+     <AssemblyName>simplerepl</AssemblyName>[m
+[31m-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>[m
+[32m+[m[32m    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>[m
+     <FileAlignment>512</FileAlignment>[m
+     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>[m
+[32m+[m[32m    <TargetFrameworkProfile />[m
+   </PropertyGroup>[m
+   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">[m
+     <PlatformTarget>AnyCPU</PlatformTarget>[m
+[1mdiff --git a/simplescript/Program.cs b/simplescript/Program.cs[m
+[1mindex 99181f9..f9a88e0 100644[m
+[1m--- a/simplescript/Program.cs[m
+[1m+++ b/simplescript/Program.cs[m
+[36m@@ -7,10 +7,12 @@[m [mclass Program[m
+     {[m
+         static void Main(string[] args)[m
+         {[m
+[31m-            var script = CSharpScript.Create("\"Hello world\"");[m
+[32m+[m[32m            var script = CSharpScript.Create("\"Hello World\"");[m
+             var result = script.RunAsync().ReturnValue;[m
+             Console.WriteLine(result.Result);[m
+ [m
+[32m+[m[32m            // async version[m
+[32m+[m
+             //result.ReturnValue[m
+             //    .ContinueWith(t =>[m
+             //    {[m
