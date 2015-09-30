@@ -72,8 +72,7 @@ namespace simplerepl
         private static bool IsCompleteSubmission(string code)
         {
             var syntaxTree = SyntaxFactory.ParseSyntaxTree(code, options: options);
-            var isComplete = SyntaxFactory.IsCompleteSubmission(syntaxTree);
-            return isComplete;
+            return SyntaxFactory.IsCompleteSubmission(syntaxTree);
         }
     }
 }
