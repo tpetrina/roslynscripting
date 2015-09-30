@@ -12,10 +12,15 @@ namespace simplerepl
 
         static void Main(string[] args)
         {
+            DoAsync();
+        }
+
+        private static async void DoAsync()
+        {
             options = new CSharpParseOptions(LanguageVersion.CSharp6,
-                DocumentationMode.Parse,
-                SourceCodeKind.Interactive,
-                null);
+                            DocumentationMode.Parse,
+                            SourceCodeKind.Interactive,
+                            null);
 
             Script<object> script = CSharpScript.Create(string.Empty);
 
@@ -31,13 +36,17 @@ namespace simplerepl
                 {
                     bool isComplete = IsCompleteSubmission(code);
 
-                    if (!isComplete)
+                    if (code == ":quit")
+                    {
+                        break;
+                    }
+                    else if (!isComplete)
                     {
                         Console.WriteLine("Incomplete submission");
                     }
                     else
                     {
-                        result = newScript.RunAsync().Result;
+                        result = await newScript.RunAsync();
                         script = newScript;
                     }
                 }
