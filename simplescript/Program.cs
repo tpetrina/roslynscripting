@@ -8,8 +8,8 @@ namespace simplescript
         static void Main(string[] args)
         {
             var script = CSharpScript.Create("\"Hello World\"");
-            var result = script.RunAsync().ReturnValue;
-            Console.WriteLine(result.Result);
+            var result = script.RunAsync().Result;
+            Console.WriteLine(result.ReturnValue);
 
             // async version
 
