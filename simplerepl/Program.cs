@@ -1,7 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
-using Microsoft.CodeAnalysis.Scripting.CSharp;
 using System;
 
 namespace simplerepl
@@ -14,12 +14,12 @@ namespace simplerepl
         {
             DoAsync();
         }
-
+        
         private static async void DoAsync()
         {
             options = new CSharpParseOptions(LanguageVersion.CSharp6,
                             DocumentationMode.Parse,
-                            SourceCodeKind.Interactive,
+                            SourceCodeKind.Script,
                             null);
 
             Script<object> script = CSharpScript.Create(string.Empty);
